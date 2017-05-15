@@ -32,7 +32,7 @@ public class UserService {
         List<UserMusicUrl> saved = new ArrayList<>();
         try {
             for(UserMusicUrl url:playList){
-                if(usersMusicRepository.findByNameOrUrl(url.getName(),url.getUrl()).size()>0)
+                if(usersMusicRepository.findByNameOrUrl(url.getName(),url.getUrl()).size()==0)
                     saved.add(usersMusicRepository.save(url));
             }
 
@@ -48,12 +48,6 @@ public class UserService {
         return usersMusicRepository.findAll();
     }
 
-    public Rating getUser(Long user) {
-        Rating ratingMatch;
-        List<Rating> l = ratingRepository.findById(user);
-        ratingMatch = l.get(0);
-        return ratingMatch;
-    }
 
     public Rating rate(Rating rating) {
         return ratingRepository.save(rating);

@@ -1,6 +1,5 @@
 package com.entities;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,11 +29,15 @@ public class UserMusicUrl {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date registered;
 
+/*
     @Getter
-    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
-    protected Rating rating;
+    protected Set<Rating> rating = new HashSet<>();
+*/
+
+    @Getter
+    protected String userId;
 
     @Setter
     @Getter
@@ -56,6 +59,9 @@ public class UserMusicUrl {
         registered = new Date();
     }
 
+    public void setId(String userId) {
+        this.userId = userId;
+    }
     public String getRegistered() {
         return registered.toString();
     }

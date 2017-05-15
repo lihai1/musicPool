@@ -1,14 +1,11 @@
 package com.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.models.LikeState;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 
 /**
@@ -21,10 +18,14 @@ public class Rating {
     @Getter
     @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
-    @Column(name = "id", updatable = false, nullable = false)
-    protected Long userId;
+    //@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    //@GenericGenerator(name = "native", strategy = "native")
+    //@Column(name = "id", updatable = false, nullable = false)
+    protected String userId;
+
+    @Getter
+    @Setter
+    protected Long urlId;
 
     @Setter
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,11 +33,11 @@ public class Rating {
 
     public String getRegistered() {return registered.toString();}
 
-    @Getter
+    /*@Getter
     @Setter
     @OneToMany(targetEntity = UserMusicUrl.class, mappedBy = "url",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonBackReference
-    protected Set<UserMusicUrl> songUrl;
+    protected UserMusicUrl songUrl;*/
 
     @Setter
     @Getter

@@ -27,7 +27,7 @@ import java.util.concurrent.atomic.AtomicLong;
 @CrossOrigin
 @RestController
 @EnableAutoConfiguration
-@RequestMapping(value = "/user")
+//@RequestMapping(value = "/user")
 public class UserCtrl {
 
     private final AtomicLong counter = new AtomicLong();
