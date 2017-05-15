@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface UsersMusicRepository extends JpaRepository<UserMusicUrl,Long>{
 
+    //List<UserMusicUrl> findAll();
+
     List<UserMusicUrl> findByNameOrUrl(String name,String url);
 
 }

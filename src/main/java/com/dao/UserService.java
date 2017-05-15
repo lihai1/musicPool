@@ -2,6 +2,7 @@ package com.dao;
 
 import com.entities.Rating;
 import com.entities.UserMusicUrl;
+import com.models.SongAndRating;
 import com.repositories.RatingRepository;
 import com.repositories.UsersMusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,19 @@ public class UserService {
         return usersMusicRepository.findAll();
     }
 
+    public List<SongAndRating> getListWithRating() {
+        List<UserMusicUrl> list = getList();
+        List<SongAndRating> result = new ArrayList<>();
+        SongAndRating model;
+        for(UserMusicUrl url:list){
+            model = new SongAndRating();
+            model.setSong(url);
+            model.setUsers(ratingRepository.findByUrlId(url.getId()));
+            result.add(model);
+        }
+        return result;
+    }
+
 
     public Rating rate(Rating rating) {
         return ratingRepository.save(rating);
@@ -58,6 +72,16 @@ public class UserService {
             for(UserMusicUrl url:songs){
                 usersMusicRepository.delete(songs);
             }
+            return "Success";
+        }
+        catch(Exception e){
+            return e;
+        }
+    }
+
+    public Object cancelRate(Rating rating) {
+        try {
+            ratingRepository.delete(rating);
             return "Success";
         }
         catch(Exception e){

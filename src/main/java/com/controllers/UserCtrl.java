@@ -13,6 +13,8 @@ package com.controllers;
 import com.dao.UserService;
 import com.entities.Rating;
 import com.entities.UserMusicUrl;
+import com.models.LikeState;
+import com.models.SongAndRating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,7 @@ public class UserCtrl {
     @GetMapping(value = "/getList")
     //@ResponseBody
     public ResponseEntity getList() {
-        List<UserMusicUrl> u = userService.getList();
+        List<SongAndRating> u = userService.getListWithRating();
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
@@ -66,7 +68,12 @@ public class UserCtrl {
     @RequestMapping(value = "/rate", method = RequestMethod.POST)
     //@ResponseBody
     public ResponseEntity addUser(@RequestBody Rating rating) {
-        Rating u = userService.rate(rating);
+        Object u;
+        if(rating.getLiked() == LikeState.NONE){
+            u = userService.cancelRate(rating);
+        }
+        else
+            u = userService.rate(rating);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 }
