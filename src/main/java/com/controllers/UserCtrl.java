@@ -10,14 +10,9 @@ package com.controllers;
  * @author LihaiMac
  */
 
-import com.dao.UserNumbersService;
 import com.dao.UserService;
-import com.entities.SavedNumbers;
-import com.entities.UserNumbers;
-import com.entities.User;
-import com.models.FormRequest;
-import com.models.SaveNumbersForm;
-import com.models.user.UserLogin;
+import com.entities.Rating;
+import com.entities.UserMusicUrl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +34,7 @@ public class UserCtrl {
     private Logger logger = LoggerFactory.getLogger(UserCtrl.class);
 
     @Autowired
-    UserService apiRequestService;
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserNumbersService userNumbersService;
 
     //@Autowired
     public UserCtrl(/*UserService userService*/) {
@@ -52,43 +42,33 @@ public class UserCtrl {
         counter.incrementAndGet();
     }
 
-    @RequestMapping(value = "/get", method = RequestMethod.POST)
+    @GetMapping(value = "/getList")
     //@ResponseBody
-    public ResponseEntity getUser(@RequestBody UserLogin userLogin) {
-        User u = userService.getUser(userLogin);
+    public ResponseEntity getList() {
+        List<UserMusicUrl> u = userService.getList();
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/setList", method = RequestMethod.POST)
     //@ResponseBody
-    public ResponseEntity addUser(@RequestBody UserLogin userLogin) {
-        User u = userService.saveUser(userLogin);
+    public ResponseEntity setList(@RequestBody List<UserMusicUrl> songs) {
+        List<UserMusicUrl> u = userService.saveList(songs);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/addUserNumbers", method = RequestMethod.POST)
+    @RequestMapping(value = "/removeList", method = RequestMethod.POST)
     //@ResponseBody
-    public ResponseEntity addUserNumbers(@RequestBody SaveNumbersForm user) {
-        UserNumbers u = userNumbersService.saveNumbers(user);
+    public ResponseEntity removeList(@RequestBody List<UserMusicUrl> songs) {
+        Object u = userService.removeList(songs);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getUserNumbers", method = RequestMethod.POST)
+    @RequestMapping(value = "/rate", method = RequestMethod.POST)
     //@ResponseBody
-    public ResponseEntity getUserNumbers(@RequestBody User user) {
-        List<UserNumbers> u = userNumbersService.getNumbers(user.getId());
+    public ResponseEntity addUser(@RequestBody Rating rating) {
+        Rating u = userService.rate(rating);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
-
-    @RequestMapping(value = "/generateUserNumbers", method = RequestMethod.POST)
-    //@ResponseBody
-    public ResponseEntity generateUserNumbers(@RequestBody FormRequest user) {
-        List<SavedNumbers> u = userNumbersService.generateNumbers(user);
-        return new ResponseEntity<>(u, HttpStatus.OK);
-    }
-
-
-
 }
 
 

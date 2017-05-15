@@ -12,3 +12,5 @@ public class  DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 }
+
+/*spring.datasource.url=jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE*/

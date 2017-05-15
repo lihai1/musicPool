@@ -1,69 +1,73 @@
 package com.dao;
 
-import com.entities.User;
-import com.entities.UserNumbers;
-import com.models.user.UserLogin;
-import com.repositories.UserRepository;
+import com.entities.Rating;
+import com.entities.UserMusicUrl;
+import com.repositories.RatingRepository;
+import com.repositories.UsersMusicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Created by LihaiMac on 4/20/17.
  */
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    @Autowired
-    private UserNumbersService userNumbersService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UsersMusicRepository usersMusicRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
+
+    public UserService() {
+
+
     }
 
 
-    public User saveUser(UserLogin userLogin) {
+    public List<UserMusicUrl> saveList(List<UserMusicUrl> playList) {
+        List<UserMusicUrl> saved = new ArrayList<>();
         try {
-            User userData = userRepository.findAll().stream()
-                    .filter(usr ->  usr.getName().equals(userLogin.getName()))
-                    .findFirst().get();
-        } catch (NoSuchElementException e) {
-            User usr = new User(userLogin);
-            UserNumbers un = new UserNumbers();
-            un.setRegistered(new Date());
-            return userRepository.save(usr);
+            for(UserMusicUrl url:playList){
+                if(usersMusicRepository.findByNameOrUrl(url.getName(),url.getUrl()).size()>0)
+                    saved.add(usersMusicRepository.save(url));
+            }
+
+        } catch (Exception e) {
+             e.printStackTrace();
         }
 
-        User usr = new User();
-        usr.setName("userLogin exist!");
-        return usr;
+        return saved;
 
     }
 
-    public User getUser(UserLogin userLogin) {
-        User userMatch;
+    public List<UserMusicUrl> getList() {
+        return usersMusicRepository.findAll();
+    }
+
+    public Rating getUser(Long user) {
+        Rating ratingMatch;
+        List<Rating> l = ratingRepository.findById(user);
+        ratingMatch = l.get(0);
+        return ratingMatch;
+    }
+
+    public Rating rate(Rating rating) {
+        return ratingRepository.save(rating);
+    }
+
+    public Object removeList(List<UserMusicUrl> songs) {
         try {
-            userMatch = userRepository.findAll().stream()
-                    .filter(usr -> {
-                        boolean flag = usr.getName().equals(userLogin.getName());
-                        flag = flag && usr.getPass().equals(userLogin.getPass());
-                        return flag;
-                    })
-                    .findFirst().get();
-            //userMatch.setNumbers(userNumbersService.getUserNumbersByUser(userMatch.getId()));
-        } catch (NoSuchElementException e) {
-            userMatch = new User("not found", "not validated");
+            for(UserMusicUrl url:songs){
+                usersMusicRepository.delete(songs);
+            }
+            return "Success";
         }
-        return userMatch;
-    }
-    public User getUser(Long user) {
-        User userMatch;
-        List<User> l = userRepository.findById(user);
-        userMatch = l.get(0);
-        return userMatch;
+        catch(Exception e){
+            return e;
+        }
     }
 }

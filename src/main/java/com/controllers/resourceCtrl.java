@@ -10,7 +10,6 @@ package com.controllers;
  * @author LihaiMac
  */
 
-import com.dao.AppGlobalProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -32,6 +31,8 @@ import java.net.*;
 @RestController
 @EnableAutoConfiguration
 public class resourceCtrl {
+
+    public static int BUFFER_SIZE = 1024;
 
     private Logger logger = LoggerFactory.getLogger(resourceCtrl.class);
 
@@ -72,7 +73,7 @@ public class resourceCtrl {
         // get output stream of the response
         OutputStream outStream = response.getOutputStream();
 
-        byte[] buffer = new byte[AppGlobalProperties.BUFFER_SIZE];
+        byte[] buffer = new byte[BUFFER_SIZE];
         int bytesRead = -1;
 
         // write bytes read from the input stream into the output stream
