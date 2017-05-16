@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,14 +18,57 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
-    private UsersMusicRepository usersMusicRepository;
+
 
     @Autowired
     private RatingRepository ratingRepository;
 
-    public UserService() {
+    private UsersMusicRepository usersMusicRepository;
 
+    @Autowired
+    public UserService(UsersMusicRepository usersMusicRepository) {
+        this.usersMusicRepository = usersMusicRepository;
+        List<UserMusicUrl> list = new ArrayList<>(Arrays.asList(new UserMusicUrl[]{
+                new UserMusicUrl(
+                        "fgnghjmgjhjkgh",
+                        130000L,
+                        "203Z",
+                        "cRGrIn2VHTE",
+                        "calm",
+                        "lihai"
+                ),
+                new UserMusicUrl(
+                        "fgnghjmgjhjkgh",
+                        130000L,
+                        "203Z",
+                        "rUWHOLDGwL0",
+                        "calm",
+                        "lihai"
+                ),
+                new UserMusicUrl(
+                        "fgnghjmgjhjkgh",
+                        130000L,
+                        "test-name",
+                        "NGLxoKOvzu4",
+                        "calm",
+                        "lihai"
+                ),
+                new UserMusicUrl(
+                        "fgnghjmgjhjkgh",
+                        130000L,
+                        "new song name",
+                        "NGLxoKOvzu4",
+                        "strong",
+                        "lihai")
+        }));
+
+
+        //Insert some random pies
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setLikes((int) (Math.random() * 10));
+            list.get(i).setDislikes((int) (Math.random() * 10));
+            usersMusicRepository.save(list.get(i));
+        }
     }
 
 
@@ -82,6 +126,7 @@ public class UserService {
             return e;
         }
     }
+
 
 /*
     public static UserMusicUrl getUrlById(Long currentMusicUrlId) {

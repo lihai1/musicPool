@@ -65,6 +65,16 @@ public class UserMusicUrl {
         registered = new Date();
     }
 
+    public UserMusicUrl(String userId, Long dur, String name, String url, String genre1, String artist1) {
+        registered = new Date();
+        setDuration(dur);
+        setName(name);
+        setUrl(url);
+        setGenre(genre1);
+        setArtist(artist1);
+
+    }
+
     public String getRegistered() {
         return registered.toString();
     }
