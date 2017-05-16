@@ -18,9 +18,6 @@ public class Rating {
     @Getter
     @Setter
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    //@GenericGenerator(name = "native", strategy = "native")
-    //@Column(name = "id", updatable = false, nullable = false)
     protected String userId;
 
     @Getter
@@ -32,12 +29,6 @@ public class Rating {
     protected Date registered;
 
     public String getRegistered() {return registered.toString();}
-
-    /*@Getter
-    @Setter
-    @OneToMany(targetEntity = UserMusicUrl.class, mappedBy = "url",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonBackReference
-    protected UserMusicUrl songUrl;*/
 
     @Setter
     @Getter

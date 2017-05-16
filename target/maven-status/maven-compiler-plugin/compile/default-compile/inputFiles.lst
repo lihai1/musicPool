@@ -1,9 +1,13 @@
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/dao/UserService.java
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/controllers/UserCtrl.java
+/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/dao/LiveService.java
+/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/models/SongAndRating.java
+/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/entities/Rating.java
+/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/entities/LiveData.java
+/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/repositories/LiveDataRepository.java
+/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/DemoApplication.java
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/repositories/UsersMusicRepository.java
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/entities/UserMusicUrl.java
-/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/entities/Rating.java
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/repositories/RatingRepository.java
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/controllers/resourceCtrl.java
 /Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/models/LikeState.java
-/Users/LihaiMac/Desktop/home work/hackaton2017/src/main/java/com/DemoApplication.java

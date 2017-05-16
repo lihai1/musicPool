@@ -10,11 +10,12 @@ package com.controllers;
  * @author LihaiMac
  */
 
+import com.dao.LiveService;
 import com.dao.UserService;
+import com.entities.LiveData;
 import com.entities.Rating;
 import com.entities.UserMusicUrl;
 import com.models.LikeState;
-import com.models.SongAndRating;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class UserCtrl {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private LiveService liveService;
+
     //@Autowired
     public UserCtrl(/*UserService userService*/) {
     //    this.userService = userService;
@@ -47,11 +51,12 @@ public class UserCtrl {
     @GetMapping(value = "/getList")
     //@ResponseBody
     public ResponseEntity getList() {
-        List<SongAndRating> u = userService.getListWithRating();
+        List<UserMusicUrl> u = userService.getList();
+        u.stream().sorted((a, b) -> a.compareTo(b));
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/setList", method = RequestMethod.POST)
+    @RequestMapping(value = "/setList")
     //@ResponseBody
     public ResponseEntity setList(@RequestBody List<UserMusicUrl> songs) {
         List<UserMusicUrl> u = userService.saveList(songs);
@@ -67,7 +72,7 @@ public class UserCtrl {
 
     @RequestMapping(value = "/rate", method = RequestMethod.POST)
     //@ResponseBody
-    public ResponseEntity addUser(@RequestBody Rating rating) {
+    public ResponseEntity rate(@RequestBody Rating rating) {
         Object u;
         if(rating.getLiked() == LikeState.NONE){
             u = userService.cancelRate(rating);
@@ -76,6 +81,38 @@ public class UserCtrl {
             u = userService.rate(rating);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
-}
 
+
+    @RequestMapping(value = "/currentPlaying", method = RequestMethod.POST)
+    public @ResponseBody ResponseEntity setCurrent(@RequestBody LiveData live) {
+        liveService.saveCurrent(live);
+        List<UserMusicUrl> res = userService.getList();
+        return new ResponseEntity<>(res, HttpStatus.OK);
+        /*List<LiveData> played = liveService.getCurrent();
+        UserMusicUrl max = new UserMusicUrl();
+        max.setLikes(-10);
+        boolean flag = true;
+        for(UserMusicUrl url:res){
+            if(max.compareTo(url)<0){
+                for(LiveData li:played){
+                    if(li.getUrlPlayed() == url.getId())
+                        flag = false;
+                }
+                if(flag)
+                    max = url;
+                else flag = true;
+            }
+        }
+        return new ResponseEntity<>(max, HttpStatus.OK);
+*/
+    }
+
+    @GetMapping(value = "/currentPlaying")
+    public @ResponseBody ResponseEntity setCurrent() {
+
+        return new ResponseEntity<>(liveService.getCurrent(), HttpStatus.OK);
+
+    }
+
+}
 

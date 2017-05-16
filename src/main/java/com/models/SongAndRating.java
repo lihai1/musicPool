@@ -1,11 +1,8 @@
 package com.models;
 
-import com.entities.Rating;
 import com.entities.UserMusicUrl;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 
 /**
@@ -18,5 +15,13 @@ public class SongAndRating {
 
     UserMusicUrl song;
 
-    List<Rating> users;
+    int likes;
+    int dislikes;
+
+    public void addLikes(){
+        likes++;
+    }
+    public void addDislikes(){
+        dislikes++;
+    }
 }

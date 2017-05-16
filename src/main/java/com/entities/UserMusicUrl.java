@@ -29,15 +29,13 @@ public class UserMusicUrl {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date registered;
 
-/*
     @Getter
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonManagedReference
-    protected Set<Rating> rating = new HashSet<>();
-*/
+    @Setter
+    protected String userId;
 
     @Getter
-    protected String userId;
+    @Setter
+    protected Long duration;
 
     @Setter
     @Getter
@@ -55,17 +53,30 @@ public class UserMusicUrl {
     @Getter
     protected String artist;
 
+    @Setter
+    @Getter
+    protected int likes=0;
+
+    @Setter
+    @Getter
+    protected int dislikes=0;
+
     public UserMusicUrl() {
         registered = new Date();
     }
 
-    public void setId(String userId) {
-        this.userId = userId;
-    }
     public String getRegistered() {
         return registered.toString();
     }
 
+    public void addLikes(){
+        likes++;
+    }
+    public void addDislikes(){
+        dislikes++;
+    }
 
-
+    public int compareTo(UserMusicUrl a) {
+        return getLikes()-getDislikes() - a.getLikes() - a.getDislikes();
+    }
 }
